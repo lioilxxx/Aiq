@@ -2,300 +2,157 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI工具箱 · 国内可用AI工具导航</title>
-  <!-- 引入阿里云数智字体，提升现代感 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <!-- Font Awesome 6 图标库，用于美观图标 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #f8fafc;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       color: #0f172a;
-      line-height: 1.5;
-      padding: 2rem 1.5rem;
+      padding: 2rem 1rem;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
-
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    /* 头部区域 */
-    .header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
+    .container { max-width: 1300px; margin: 0 auto; }
+    
+    .header { text-align: center; margin-bottom: 2rem; }
     .header h1 {
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       font-weight: 700;
-      letter-spacing: -0.5px;
       background: linear-gradient(135deg, #2563eb, #7c3aed);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.25rem;
     }
-    .header .subtitle {
-      color: #475569;
-      font-size: 1.1rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .header .subtitle i {
-      color: #3b82f6;
-      font-size: 1rem;
-    }
+    .subtitle { color: #64748b; margin: 0.5rem 0; }
     .badge {
       background: #dbeafe;
       color: #1e40af;
-      padding: 0.25rem 0.9rem;
+      padding: 0.3rem 1rem;
       border-radius: 20px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
+      display: inline-block;
+      margin-top: 0.5rem;
     }
 
-    /* 搜索与筛选栏 */
-    .controls {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
+    .search-box {
       background: white;
       padding: 1.5rem;
-      border-radius: 1.5rem;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
-      backdrop-filter: blur(2px);
-    }
-
-    .search-wrapper {
-      position: relative;
-      width: 100%;
-    }
-    .search-wrapper i {
-      position: absolute;
-      left: 1.2rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #94a3b8;
-      font-size: 1.1rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
     }
     #searchInput {
       width: 100%;
-      padding: 0.9rem 1.2rem 0.9rem 3rem;
-      border: 1px solid #e2e8f0;
-      border-radius: 2.5rem;
+      padding: 0.8rem 1.2rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 2rem;
       font-size: 1rem;
-      background: #f1f5f9;
-      transition: all 0.2s;
-      font-weight: 500;
-    }
-    #searchInput:focus {
       outline: none;
-      border-color: #3b82f6;
-      background: white;
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+      transition: border-color 0.2s;
     }
+    #searchInput:focus { border-color: #3b82f6; }
 
     .category-filters {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem;
-      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
     }
     .filter-btn {
-      background: #f1f5f9;
-      border: none;
       padding: 0.5rem 1.2rem;
+      border: none;
       border-radius: 2rem;
+      background: #f1f5f9;
+      color: #475569;
       font-weight: 600;
-      font-size: 0.9rem;
-      color: #334155;
       cursor: pointer;
       transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      border: 1px solid transparent;
-    }
-    .filter-btn i {
-      font-size: 0.85rem;
-      color: #64748b;
-    }
-    .filter-btn:hover {
-      background: #e2e8f0;
-      color: #0f172a;
     }
     .filter-btn.active {
       background: #2563eb;
       color: white;
-      border-color: #2563eb;
-      box-shadow: 0 6px 12px rgba(37,99,235,0.25);
-    }
-    .filter-btn.active i {
-      color: white;
     }
 
-    /* 工具卡片网格 */
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.2rem;
     }
-
+    
     .tool-card {
       background: white;
-      border-radius: 1.2rem;
-      padding: 1.5rem 1.3rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-      transition: all 0.25s ease;
-      display: flex;
-      flex-direction: column;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
       border: 1px solid #f1f5f9;
-      position: relative;
     }
     .tool-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
-      border-color: #d9e2f0;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     }
-    .card-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.9rem;
-      margin-bottom: 0.9rem;
-    }
+    
+    .card-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
     .tool-icon {
-      width: 48px;
-      height: 48px;
+      width: 45px;
+      height: 45px;
       background: linear-gradient(135deg, #eff6ff, #dbeafe);
-      border-radius: 14px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       color: #2563eb;
-      flex-shrink: 0;
     }
-    .tool-info {
-      flex: 1;
-    }
-    .tool-name {
-      font-weight: 700;
-      font-size: 1.25rem;
-      margin-bottom: 0.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .tool-company {
-      font-size: 0.8rem;
-      color: #64748b;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
+    .tool-name { font-size: 1.2rem; font-weight: 700; }
+    .tool-company { font-size: 0.85rem; color: #64748b; }
     .tool-desc {
       color: #475569;
       font-size: 0.9rem;
-      margin: 0.7rem 0 1rem;
+      margin: 0.8rem 0;
       line-height: 1.5;
-      flex: 1;
+    }
+    .tool-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f1f5f9;
     }
     .category-tag {
       background: #f1f5f9;
-      padding: 0.2rem 0.7rem;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #475569;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.2rem;
-      width: fit-content;
-      margin-bottom: 1rem;
-    }
-    .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: auto;
-      border-top: 1px solid #f1f5f9;
-      padding-top: 0.9rem;
-    }
-    .access-badge {
-      background: #dcfce7;
-      color: #166534;
-      font-size: 0.7rem;
-      font-weight: 700;
       padding: 0.25rem 0.7rem;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
     }
     .visit-btn {
-      background: white;
-      border: 1px solid #e2e8f0;
-      padding: 0.45rem 1.2rem;
-      border-radius: 2rem;
-      font-weight: 600;
-      font-size: 0.8rem;
-      color: #1e293b;
-      cursor: pointer;
-      transition: 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      text-decoration: none;
-    }
-    .visit-btn:hover {
       background: #2563eb;
-      border-color: #2563eb;
       color: white;
+      padding: 0.4rem 1.2rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: background 0.2s;
     }
+    .visit-btn:hover { background: #1d4ed8; }
 
     .no-results {
-      grid-column: 1 / -1;
       text-align: center;
       padding: 3rem;
-      background: white;
-      border-radius: 1.5rem;
-      color: #64748b;
-      font-weight: 500;
+      color: #94a3b8;
+      grid-column: 1 / -1;
     }
-
-    .footer-note {
+    .footer {
       text-align: center;
       margin-top: 2rem;
       color: #94a3b8;
       font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
     }
   </style>
 </head>
@@ -303,322 +160,96 @@
   <div class="container">
     <div class="header">
       <h1>🤖 AI 工具集</h1>
-      <div class="subtitle">
-        <span>国内可直接访问 · 智能工作流</span>
-        <span class="badge"><i class="fas fa-check-circle"></i> 免翻即用</span>
-      </div>
+      <p class="subtitle">国内可直接访问 · 精选AI工具导航</p>
+      <span class="badge">✅ 免翻即用</span>
     </div>
 
-    <!-- 搜索与分类筛选 -->
-    <div class="controls">
-      <div class="search-wrapper">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="搜索工具名称、公司或描述...">
-      </div>
-      <div class="category-filters" id="categoryContainer">
-        <!-- 动态生成分类按钮，但保留一个“全部” -->
-      </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="🔍 搜索工具名称...">
+      <div class="category-filters" id="categoryContainer"></div>
     </div>
 
-    <!-- 工具卡片展示区 -->
-    <div id="toolsContainer" class="tools-grid">
-      <!-- 通过JS动态渲染 -->
-    </div>
-    <div class="footer-note">
-      <i class="fas fa-shield-alt"></i> 所有工具均可在国内网络环境下正常访问
-    </div>
+    <div id="toolsContainer" class="tools-grid"></div>
+    <div class="footer">所有工具均可在国内网络环境下正常访问</div>
   </div>
 
   <script>
-    (function() {
-      // ---------- 工具数据（国内可用AI工具）----------
-      const toolsData = [
-        {
-          id: 1,
-          name: "文心一言",
-          company: "百度",
-          icon: "fa-solid fa-feather",
-          category: "对话助手",
-          desc: "百度知识增强大语言模型，支持文本生成、对话、创意写作，与百度搜索深度结合。",
-          url: "https://yiyan.baidu.com",
-          access: "免费使用"
-        },
-        {
-          id: 2,
-          name: "通义千问",
-          company: "阿里巴巴",
-          icon: "fa-solid fa-cloud",
-          category: "对话助手",
-          desc: "阿里云推出的超大规模语言模型，支持多轮对话、文案创作与逻辑推理。",
-          url: "https://tongyi.aliyun.com",
-          access: "免费使用"
-        },
-        {
-          id: 3,
-          name: "讯飞星火",
-          company: "科大讯飞",
-          icon: "fa-solid fa-fire",
-          category: "对话助手",
-          desc: "科大讯飞认知大模型，具备跨领域知识与语言理解能力，支持插件与多模态。",
-          url: "https://xinghuo.xfyun.cn",
-          access: "免费试用"
-        },
-        {
-          id: 4,
-          name: "Kimi 智能助手",
-          company: "月之暗面",
-          icon: "fa-solid fa-moon",
-          category: "对话助手",
-          desc: "支持超长上下文输入，擅长处理长文档、合同与复杂对话。",
-          url: "https://kimi.moonshot.cn",
-          access: "免费使用"
-        },
-        {
-          id: 5,
-          name: "智谱清言",
-          company: "智谱AI",
-          icon: "fa-solid fa-brain",
-          category: "对话助手",
-          desc: "基于GLM模型，提供智能对话、代码生成与知识问答服务。",
-          url: "https://chatglm.cn",
-          access: "免费使用"
-        },
-        {
-          id: 6,
-          name: "腾讯混元",
-          company: "腾讯",
-          icon: "fa-brands fa-tencent-weibo",
-          category: "对话助手",
-          desc: "腾讯全链路自研大模型，应用于微信、腾讯会议等场景。",
-          url: "https://hunyuan.tencent.com",
-          access: "内测/申请"
-        },
-        {
-          id: 7,
-          name: "DeepSeek",
-          company: "深度求索",
-          icon: "fa-solid fa-magnifying-glass-chart",
-          category: "对话助手",
-          desc: "专注深度推理与代码生成，开源模型性能强劲，支持免费商用。",
-          url: "https://chat.deepseek.com",
-          access: "免费使用"
-        },
-        {
-          id: 8,
-          name: "文心一格",
-          company: "百度",
-          icon: "fa-solid fa-palette",
-          category: "图像生成",
-          desc: "百度AI艺术与创意辅助平台，输入文字描述即可生成精美画作。",
-          url: "https://yige.baidu.com",
-          access: "免费/付费"
-        },
-        {
-          id: 9,
-          name: "通义万相",
-          company: "阿里巴巴",
-          icon: "fa-solid fa-image",
-          category: "图像生成",
-          desc: "阿里云AI绘画模型，支持文本生成图像、风格迁移等。",
-          url: "https://tongyi.aliyun.com/wanxiang",
-          access: "免费使用"
-        },
-        {
-          id: 10,
-          name: "LiblibAI",
-          company: "LiblibAI",
-          icon: "fa-solid fa-wand-magic-sparkles",
-          category: "图像生成",
-          desc: "国内Stable Diffusion模型分享与在线生图平台，模型丰富。",
-          url: "https://www.liblib.ai",
-          access: "免费/会员"
-        },
-        {
-          id: 11,
-          name: "ProcessOn",
-          company: "ProcessOn",
-          icon: "fa-solid fa-diagram-project",
-          category: "办公效率",
-          desc: "AI思维导图/流程图协作平台，支持AI生成思维导图与图表。",
-          url: "https://www.processon.com",
-          access: "免费/付费"
-        },
-        {
-          id: 12,
-          name: "boardmix博思白板",
-          company: "博思云创",
-          icon: "fa-solid fa-chalkboard",
-          category: "办公效率",
-          desc: "在线白板协作工具，集成AI生成思维导图、流程图、图片等。",
-          url: "https://boardmix.cn",
-          access: "免费/付费"
-        },
-        {
-          id: 13,
-          name: "秘塔写作猫",
-          company: "秘塔科技",
-          icon: "fa-solid fa-cat",
-          category: "写作辅助",
-          desc: "AI写作辅助与校对工具，支持全文改写、润色、翻译。",
-          url: "https://xiezuocat.com",
-          access: "免费/付费"
-        },
-        {
-          id: 14,
-          name: "火山写作",
-          company: "字节跳动",
-          icon: "fa-solid fa-mountain",
-          category: "写作辅助",
-          desc: "字节跳动旗下AI写作助手，提供全文润色、摘要总结等。",
-          url: "https://writing.volccdn.com",
-          access: "免费使用"
-        },
-        {
-          id: 15,
-          name: "天工AI",
-          company: "昆仑万维",
-          icon: "fa-solid fa-hammer",
-          category: "对话助手",
-          desc: "昆仑万维大语言模型，支持搜索增强与多模态对话。",
-          url: "https://www.tiangong.cn",
-          access: "免费使用"
-        },
-        {
-          id: 16,
-          name: "即梦AI",
-          company: "字节跳动",
-          icon: "fa-solid fa-film",
-          category: "视频生成",
-          desc: "字节跳动AI视频生成平台，支持图生视频、文本生成视频。",
-          url: "https://jimeng.jianying.com",
-          access: "免费/付费"
-        }
-      ];
+    const toolsData = [
+      { name: "DeepSeek", company: "深度求索", icon: "fa-solid fa-robot", category: "对话助手", desc: "免费开源大模型，支持深度推理与代码生成，性能卓越", url: "https://chat.deepseek.com", access: "免费" },
+      { name: "文心一言", company: "百度", icon: "fa-solid fa-feather", category: "对话助手", desc: "百度知识增强大语言模型，支持文本生成、对话、创意写作", url: "https://yiyan.baidu.com", access: "免费" },
+      { name: "通义千问", company: "阿里巴巴", icon: "fa-solid fa-cloud", category: "对话助手", desc: "阿里云超大规模语言模型，多轮对话与逻辑推理", url: "https://tongyi.aliyun.com", access: "免费" },
+      { name: "讯飞星火", company: "科大讯飞", icon: "fa-solid fa-fire", category: "对话助手", desc: "认知大模型，具备跨领域知识与语言理解能力", url: "https://xinghuo.xfyun.cn", access: "免费" },
+      { name: "Kimi", company: "月之暗面", icon: "fa-solid fa-moon", category: "对话助手", desc: "超长上下文处理，擅长长文档、合同分析", url: "https://kimi.moonshot.cn", access: "免费" },
+      { name: "智谱清言", company: "智谱AI", icon: "fa-solid fa-brain", category: "对话助手", desc: "基于GLM模型，智能对话与代码生成", url: "https://chatglm.cn", access: "免费" },
+      { name: "文心一格", company: "百度", icon: "fa-solid fa-palette", category: "图像生成", desc: "AI艺术创作平台，文字描述生成精美画作", url: "https://yige.baidu.com", access: "免费/付费" },
+      { name: "通义万相", company: "阿里巴巴", icon: "fa-solid fa-image", category: "图像生成", desc: "AI绘画模型，文本生成图像与风格迁移", url: "https://tongyi.aliyun.com/wanxiang", access: "免费" },
+      { name: "LiblibAI", company: "LiblibAI", icon: "fa-solid fa-wand-magic-sparkles", category: "图像生成", desc: "Stable Diffusion模型分享与在线生图平台", url: "https://www.liblib.ai", access: "免费/付费" },
+      { name: "即梦AI", company: "字节跳动", icon: "fa-solid fa-film", category: "视频生成", desc: "AI视频生成平台，图生视频、文本生成视频", url: "https://jimeng.jianying.com", access: "免费/付费" },
+      { name: "ProcessOn", company: "ProcessOn", icon: "fa-solid fa-diagram-project", category: "办公效率", desc: "AI思维导图与流程图协作平台", url: "https://www.processon.com", access: "免费/付费" },
+      { name: "秘塔写作猫", company: "秘塔科技", icon: "fa-solid fa-cat", category: "写作辅助", desc: "AI写作辅助与校对，全文改写、润色、翻译", url: "https://xiezuocat.com", access: "免费/付费" },
+      { name: "火山写作", company: "字节跳动", icon: "fa-solid fa-mountain", category: "写作辅助", desc: "AI写作助手，全文润色、摘要总结", url: "https://writing.volccdn.com", access: "免费" },
+      { name: "天工AI", company: "昆仑万维", icon: "fa-solid fa-hammer", category: "对话助手", desc: "大语言模型，搜索增强与多模态对话", url: "https://www.tiangong.cn", access: "免费" },
+      { name: "腾讯混元", company: "腾讯", icon: "fa-solid fa-comment", category: "对话助手", desc: "腾讯自研大模型，应用于微信、会议等场景", url: "https://hunyuan.tencent.com", access: "内测" }
+    ];
 
-      // 提取所有分类（去重并添加“全部”）
-      const allCategories = [...new Set(toolsData.map(tool => tool.category))];
+    const categories = [...new Set(toolsData.map(t => t.category))];
+    let currentCategory = "全部";
+    let searchTerm = "";
 
-      // 当前激活的分类
-      let currentCategory = "全部";
-      // 当前搜索关键词
-      let searchTerm = "";
-
-      // DOM元素
-      const categoryContainer = document.getElementById("categoryContainer");
-      const toolsContainer = document.getElementById("toolsContainer");
-      const searchInput = document.getElementById("searchInput");
-
-      // 渲染分类按钮
-      function renderCategories() {
-        if (!categoryContainer) return;
-        const categories = ["全部", ...allCategories];
-        categoryContainer.innerHTML = categories.map(cat => {
-          const activeClass = cat === currentCategory ? 'active' : '';
-          // 图标映射
-          let icon = '';
-          if (cat === "全部") icon = '<i class="fas fa-border-all"></i>';
-          else if (cat === "对话助手") icon = '<i class="fas fa-comments"></i>';
-          else if (cat === "图像生成") icon = '<i class="fas fa-paint-brush"></i>';
-          else if (cat === "办公效率") icon = '<i class="fas fa-briefcase"></i>';
-          else if (cat === "写作辅助") icon = '<i class="fas fa-pen-fancy"></i>';
-          else if (cat === "视频生成") icon = '<i class="fas fa-video"></i>';
-          else icon = '<i class="fas fa-tag"></i>';
-          
-          return `<button class="filter-btn ${activeClass}" data-category="${cat}">${icon} ${cat}</button>`;
-        }).join('');
-
-        // 绑定分类点击事件
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-          btn.addEventListener('click', function(e) {
-            const category = this.dataset.category;
-            if (category === currentCategory) return;
-            currentCategory = category;
-            // 更新UI激活状态
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            // 重新过滤并渲染
-            filterAndRender();
-          });
+    function renderCategories() {
+      const container = document.getElementById("categoryContainer");
+      container.innerHTML = ["全部", ...categories].map(cat => 
+        `<button class="filter-btn ${cat === currentCategory ? 'active' : ''}" data-cat="${cat}">${cat}</button>`
+      ).join("");
+      
+      container.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          currentCategory = this.dataset.cat;
+          container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          renderTools();
         });
-      }
+      });
+    }
 
-      // 根据当前分类和搜索词过滤工具
-      function getFilteredTools() {
-        return toolsData.filter(tool => {
-          // 分类筛选
-          const categoryMatch = currentCategory === "全部" || tool.category === currentCategory;
-          if (!categoryMatch) return false;
-          
-          // 搜索筛选 (不区分大小写)
-          if (searchTerm.trim() === "") return true;
-          const term = searchTerm.toLowerCase().trim();
-          return (
-            tool.name.toLowerCase().includes(term) ||
-            tool.company.toLowerCase().includes(term) ||
-            tool.desc.toLowerCase().includes(term) ||
-            tool.category.toLowerCase().includes(term)
-          );
-        });
-      }
-
-      // 渲染工具卡片
-      function renderTools() {
-        const filtered = getFilteredTools();
-        if (!toolsContainer) return;
-        
-        if (filtered.length === 0) {
-          toolsContainer.innerHTML = `<div class="no-results"><i class="fas fa-search" style="margin-right:0.5rem;"></i> 没有找到匹配的工具，试试其他关键词</div>`;
-          return;
-        }
-
-        toolsContainer.innerHTML = filtered.map(tool => {
-          // 根据分类微调图标颜色或保留原有icon类
-          return `
-            <div class="tool-card" data-id="${tool.id}">
-              <div class="card-header">
-                <div class="tool-icon">
-                  <i class="${tool.icon}"></i>
-                </div>
-                <div class="tool-info">
-                  <div class="tool-name">${tool.name}</div>
-                  <div class="tool-company"><i class="fas fa-building" style="font-size:0.7rem;"></i> ${tool.company}</div>
-                </div>
-              </div>
-              <div class="tool-desc">${tool.desc}</div>
-              <span class="category-tag"><i class="fas fa-tag"></i> ${tool.category}</span>
-              <div class="card-footer">
-                <span class="access-badge"><i class="fas fa-unlock-alt"></i> ${tool.access}</span>
-                <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="visit-btn">
-                  访问 <i class="fas fa-arrow-right"></i>
-                </a>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      // 综合过滤并重新渲染工具
-      function filterAndRender() {
-        renderTools();
-      }
-
-      // 绑定搜索输入事件
-      searchInput.addEventListener('input', function(e) {
-        searchTerm = e.target.value;
-        filterAndRender();
+    function renderTools() {
+      const filtered = toolsData.filter(tool => {
+        if (currentCategory !== "全部" && tool.category !== currentCategory) return false;
+        if (searchTerm && !tool.name.includes(searchTerm) && !tool.desc.includes(searchTerm)) return false;
+        return true;
       });
 
-      // 初始渲染
-      function init() {
-        renderCategories();
-        filterAndRender(); // 默认显示全部
+      const container = document.getElementById("toolsContainer");
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="no-results">😕 没有找到匹配的工具</div>';
+        return;
       }
 
-      // 启动一切
-      init();
+      container.innerHTML = filtered.map(tool => `
+        <div class="tool-card">
+          <div class="card-header">
+            <div class="tool-icon"><i class="${tool.icon}"></i></div>
+            <div>
+              <div class="tool-name">${tool.name}</div>
+              <div class="tool-company">${tool.company}</div>
+            </div>
+          </div>
+          <div class="tool-desc">${tool.desc}</div>
+          <div class="tool-meta">
+            <span class="category-tag">${tool.category}</span>
+            <a href="${tool.url}" target="_blank" class="visit-btn">访问 →</a>
+          </div>
+        </div>
+      `).join("");
+    }
 
-      // 可选：处理窗口大小变化或额外优化
-    })();
+    document.getElementById("searchInput").addEventListener("input", function(e) {
+      searchTerm = e.target.value;
+      renderTools();
+    });
+
+    renderCategories();
+    renderTools();
   </script>
 </body>
 </html>
