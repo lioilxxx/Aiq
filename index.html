@@ -37,6 +37,14 @@
       display: inline-block;
       margin-top: 0.5rem;
     }
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 0.8rem;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
 
     .search-box {
       background: white;
@@ -121,6 +129,24 @@
       line-height: 1.5;
       flex: 1;
     }
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin: 0.5rem 0;
+    }
+    .tag {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 0.15rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .tag.new {
+      background: #dcfce7;
+      color: #166534;
+    }
     .tool-meta {
       display: flex;
       justify-content: space-between;
@@ -174,40 +200,93 @@
       <h1>🤖 AI 工具集</h1>
       <p class="subtitle">国内可直接访问 · 精选AI工具导航</p>
       <span class="badge">✅ 免翻即用</span>
+      <div class="stats">
+        <span>📦 <strong id="toolCount">0</strong> 个工具</span>
+        <span>📂 <strong id="catCount">0</strong> 个分类</span>
+      </div>
     </div>
 
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="🔍 搜索工具名称或描述...">
+      <input type="text" id="searchInput" placeholder="🔍 搜索工具名称、公司或描述...">
       <div class="category-filters" id="categoryContainer"></div>
     </div>
 
     <div id="toolsContainer" class="tools-grid"></div>
-    <div class="footer">🚀 所有工具均可在国内网络环境下正常访问</div>
+    <div class="footer">🚀 所有工具均可在国内网络环境下正常访问 · 持续更新中</div>
   </div>
 
   <script>
     const toolsData = [
-      { name: "DeepSeek", company: "深度求索", icon: "fa-solid fa-robot", category: "对话助手", desc: "免费开源大模型，支持深度推理与代码生成，性能卓越", url: "https://chat.deepseek.com", access: "免费" },
-      { name: "文心一言", company: "百度", icon: "fa-solid fa-feather", category: "对话助手", desc: "百度知识增强大语言模型，支持文本生成、对话、创意写作", url: "https://yiyan.baidu.com", access: "免费" },
-      { name: "通义千问", company: "阿里巴巴", icon: "fa-solid fa-cloud", category: "对话助手", desc: "阿里云超大规模语言模型，多轮对话与逻辑推理", url: "https://tongyi.aliyun.com", access: "免费" },
-      { name: "讯飞星火", company: "科大讯飞", icon: "fa-solid fa-fire", category: "对话助手", desc: "认知大模型，具备跨领域知识与语言理解能力", url: "https://xinghuo.xfyun.cn", access: "免费" },
-      { name: "Kimi", company: "月之暗面", icon: "fa-solid fa-moon", category: "对话助手", desc: "超长上下文处理，擅长长文档、合同分析", url: "https://kimi.moonshot.cn", access: "免费" },
-      { name: "智谱清言", company: "智谱AI", icon: "fa-solid fa-brain", category: "对话助手", desc: "基于GLM模型，智能对话与代码生成", url: "https://chatglm.cn", access: "免费" },
-      { name: "腾讯混元", company: "腾讯", icon: "fa-solid fa-comment", category: "对话助手", desc: "腾讯自研大模型，应用于微信、会议等场景", url: "https://hunyuan.tencent.com", access: "内测" },
-      { name: "天工AI", company: "昆仑万维", icon: "fa-solid fa-hammer", category: "对话助手", desc: "大语言模型，搜索增强与多模态对话", url: "https://www.tiangong.cn", access: "免费" },
-      { name: "文心一格", company: "百度", icon: "fa-solid fa-palette", category: "图像生成", desc: "AI艺术创作平台，文字描述生成精美画作", url: "https://yige.baidu.com", access: "免费/付费" },
-      { name: "通义万相", company: "阿里巴巴", icon: "fa-solid fa-image", category: "图像生成", desc: "AI绘画模型，文本生成图像与风格迁移", url: "https://tongyi.aliyun.com/wanxiang", access: "免费" },
-      { name: "LiblibAI", company: "LiblibAI", icon: "fa-solid fa-wand-magic-sparkles", category: "图像生成", desc: "Stable Diffusion模型分享与在线生图平台", url: "https://www.liblib.ai", access: "免费/付费" },
-      { name: "即梦AI", company: "字节跳动", icon: "fa-solid fa-film", category: "视频生成", desc: "AI视频生成平台，图生视频、文本生成视频", url: "https://jimeng.jianying.com", access: "免费/付费" },
-      { name: "ProcessOn", company: "ProcessOn", icon: "fa-solid fa-diagram-project", category: "办公效率", desc: "AI思维导图与流程图协作平台", url: "https://www.processon.com", access: "免费/付费" },
-      { name: "boardmix博思白板", company: "博思云创", icon: "fa-solid fa-chalkboard", category: "办公效率", desc: "在线白板协作，集成AI生成导图、流程图", url: "https://boardmix.cn", access: "免费/付费" },
-      { name: "秘塔写作猫", company: "秘塔科技", icon: "fa-solid fa-cat", category: "写作辅助", desc: "AI写作辅助与校对，全文改写、润色、翻译", url: "https://xiezuocat.com", access: "免费/付费" },
-      { name: "火山写作", company: "字节跳动", icon: "fa-solid fa-mountain", category: "写作辅助", desc: "AI写作助手，全文润色、摘要总结", url: "https://writing.volccdn.com", access: "免费" }
+      // ===== 对话助手 =====
+      { name: "DeepSeek", company: "深度求索", icon: "fa-solid fa-robot", category: "对话助手", desc: "免费开源大模型，支持深度推理与代码生成，性能卓越", url: "https://chat.deepseek.com", tags: ["热门", "免费"] },
+      { name: "文心一言", company: "百度", icon: "fa-solid fa-feather", category: "对话助手", desc: "百度知识增强大语言模型，支持文本生成、对话、创意写作", url: "https://yiyan.baidu.com", tags: ["免费"] },
+      { name: "通义千问", company: "阿里巴巴", icon: "fa-solid fa-cloud", category: "对话助手", desc: "阿里云超大规模语言模型，多轮对话与逻辑推理", url: "https://tongyi.aliyun.com", tags: ["免费"] },
+      { name: "讯飞星火", company: "科大讯飞", icon: "fa-solid fa-fire", category: "对话助手", desc: "认知大模型，具备跨领域知识与语言理解能力，支持插件", url: "https://xinghuo.xfyun.cn", tags: ["免费"] },
+      { name: "Kimi", company: "月之暗面", icon: "fa-solid fa-moon", category: "对话助手", desc: "超长上下文处理，擅长长文档、合同分析，支持200万字", url: "https://kimi.moonshot.cn", tags: ["热门", "免费"] },
+      { name: "智谱清言", company: "智谱AI", icon: "fa-solid fa-brain", category: "对话助手", desc: "基于GLM-4模型，智能对话、代码生成与知识问答", url: "https://chatglm.cn", tags: ["免费"] },
+      { name: "腾讯混元", company: "腾讯", icon: "fa-solid fa-comment", category: "对话助手", desc: "腾讯自研大模型，应用于微信、腾讯会议等产品", url: "https://hunyuan.tencent.com", tags: ["内测"] },
+      { name: "天工AI", company: "昆仑万维", icon: "fa-solid fa-hammer", category: "对话助手", desc: "大语言模型，支持搜索增强与多模态对话", url: "https://www.tiangong.cn", tags: ["免费"] },
+      { name: "豆包", company: "字节跳动", icon: "fa-solid fa-cube", category: "对话助手", desc: "字节跳动AI对话助手，多场景智能问答", url: "https://www.doubao.com", tags: ["热门", "免费"] },
+      { name: "百川智能", company: "百川智能", icon: "fa-solid fa-water", category: "对话助手", desc: "百川大模型，支持超长上下文与多轮对话", url: "https://www.baichuan-ai.com", tags: ["免费"] },
+      { name: "商量", company: "商汤科技", icon: "fa-solid fa-lightbulb", category: "对话助手", desc: "商汤日日新大模型，多模态理解与生成", url: "https://chat.sensetime.com", tags: ["免费"] },
+      { name: "360智脑", company: "360", icon: "fa-solid fa-shield-halved", category: "对话助手", desc: "360自研大模型，安全可信的智能对话", url: "https://ai.360.com", tags: ["免费"] },
+
+      // ===== AI搜索 =====
+      { name: "秘塔AI搜索", company: "秘塔科技", icon: "fa-solid fa-magnifying-glass", category: "AI搜索", desc: "没有广告的AI搜索引擎，直达答案", url: "https://metaso.cn", tags: ["热门", "免费"] },
+      { name: "天工AI搜索", company: "昆仑万维", icon: "fa-solid fa-search-plus", category: "AI搜索", desc: "AI驱动的搜索引擎，智能总结搜索结果", url: "https://search.tiangong.cn", tags: ["免费"] },
+      { name: "360AI搜索", company: "360", icon: "fa-solid fa-globe", category: "AI搜索", desc: "360旗下AI搜索引擎，智能问答与搜索结合", url: "https://so.360.com", tags: ["免费"] },
+
+      // ===== 图像生成 =====
+      { name: "文心一格", company: "百度", icon: "fa-solid fa-palette", category: "图像生成", desc: "百度AI艺术创作平台，文字描述生成精美画作", url: "https://yige.baidu.com", tags: ["免费/付费"] },
+      { name: "通义万相", company: "阿里巴巴", icon: "fa-solid fa-image", category: "图像生成", desc: "阿里云AI绘画模型，文本生成图像与风格迁移", url: "https://tongyi.aliyun.com/wanxiang", tags: ["免费"] },
+      { name: "LiblibAI", company: "LiblibAI", icon: "fa-solid fa-wand-magic-sparkles", category: "图像生成", desc: "国内最大Stable Diffusion模型分享与在线生图平台", url: "https://www.liblib.ai", tags: ["热门", "免费/付费"] },
+      { name: "堆友", company: "阿里设计", icon: "fa-solid fa-layer-group", category: "图像生成", desc: "阿里设计团队AI生图工具，电商设计素材生成", url: "https://www.duidui.ai", tags: ["免费"] },
+      { name: "稿定AI", company: "稿定设计", icon: "fa-solid fa-pen-nib", category: "图像生成", desc: "AI设计工具，智能抠图、海报生成、商品图制作", url: "https://www.gaoding.com/ai", tags: ["免费/付费"] },
+
+      // ===== AI视频 =====
+      { name: "即梦AI", company: "字节跳动", icon: "fa-solid fa-film", category: "AI视频", desc: "字节AI视频生成平台，图生视频、文本生成视频", url: "https://jimeng.jianying.com", tags: ["热门"] },
+      { name: "可灵AI", company: "快手", icon: "fa-solid fa-clapperboard", category: "AI视频", desc: "快手AI视频生成，支持文生视频和图生视频", url: "https://klingai.kuaishou.com", tags: ["热门"] },
+      { name: "Vidu", company: "生数科技", icon: "fa-solid fa-video", category: "AI视频", desc: "长时长AI视频生成，支持16秒视频生成", url: "https://www.vidu.studio", tags: ["新上线"] },
+      { name: "PixVerse", company: "PixVerse", icon: "fa-solid fa-play", category: "AI视频", desc: "AI视频生成工具，支持文生视频和图片转视频", url: "https://www.pixverse.ai", tags: ["免费"] },
+
+      // ===== 办公效率 =====
+      { name: "ProcessOn", company: "ProcessOn", icon: "fa-solid fa-diagram-project", category: "办公效率", desc: "AI思维导图与流程图协作平台，支持AI生成图表", url: "https://www.processon.com", tags: ["免费/付费"] },
+      { name: "boardmix博思白板", company: "博思云创", icon: "fa-solid fa-chalkboard", category: "办公效率", desc: "在线白板协作工具，集成AI生成思维导图、流程图", url: "https://boardmix.cn", tags: ["免费/付费"] },
+      { name: "WPS AI", company: "金山办公", icon: "fa-solid fa-file-word", category: "办公效率", desc: "WPS集成AI功能，文档智能写作、PPT生成、表格分析", url: "https://ai.wps.cn", tags: ["热门"] },
+      { name: "腾讯文档AI", company: "腾讯", icon: "fa-solid fa-file-lines", category: "办公效率", desc: "腾讯文档AI助手，智能写作、翻译、摘要", url: "https://docs.qq.com", tags: ["免费"] },
+      { name: "钉钉AI", company: "阿里巴巴", icon: "fa-solid fa-building", category: "办公效率", desc: "钉钉内置AI助手，会议纪要、文档总结", url: "https://www.dingtalk.com", tags: ["免费"] },
+      { name: "飞书智能伙伴", company: "字节跳动", icon: "fa-solid fa-feather-pointed", category: "办公效率", desc: "飞书AI助手，智能总结、会议纪要、文档生成", url: "https://www.feishu.cn", tags: ["免费"] },
+
+      // ===== 写作辅助 =====
+      { name: "秘塔写作猫", company: "秘塔科技", icon: "fa-solid fa-cat", category: "写作辅助", desc: "AI写作辅助与校对，全文改写、润色、翻译、查重", url: "https://xiezuocat.com", tags: ["热门", "免费/付费"] },
+      { name: "火山写作", company: "字节跳动", icon: "fa-solid fa-mountain", category: "写作辅助", desc: "字节AI写作助手，全文润色、摘要总结、风格转换", url: "https://writing.volccdn.com", tags: ["免费"] },
+      { name: "笔灵AI", company: "笔灵", icon: "fa-solid fa-pen", category: "写作辅助", desc: "AI论文写作助手，辅助学术写作与降重", url: "https://www.bilingai.com", tags: ["免费/付费"] },
+      { name: "GIISO写作机器人", company: "GIISO", icon: "fa-solid fa-robot", category: "写作辅助", desc: "AI写作机器人，热点文章、营销文案自动生成", url: "https://www.giiso.com", tags: ["免费/付费"] },
+
+      // ===== AI编程 =====
+      { name: "通义灵码", company: "阿里巴巴", icon: "fa-solid fa-code", category: "AI编程", desc: "阿里云AI代码助手，代码生成、注释、Debug", url: "https://tongyi.aliyun.com/lingma", tags: ["热门", "免费"] },
+      { name: "CodeGeeX", company: "智谱AI", icon: "fa-solid fa-terminal", category: "AI编程", desc: "开源AI编程助手，代码生成与翻译，支持多IDE", url: "https://codegeex.cn", tags: ["免费"] },
+      { name: "iFlyCode", company: "科大讯飞", icon: "fa-solid fa-laptop-code", category: "AI编程", desc: "讯飞AI编程助手，智能代码补全与生成", url: "https://iflycode.xfyun.cn", tags: ["免费"] },
+      { name: "MarsCode", company: "字节跳动", icon: "fa-solid fa-rocket", category: "AI编程", desc: "字节跳动AI编程助手，云端IDE集成", url: "https://www.marscode.cn", tags: ["免费"] },
+
+      // ===== AI音乐 =====
+      { name: "天工音乐", company: "昆仑万维", icon: "fa-solid fa-music", category: "AI音乐", desc: "AI音乐生成工具，文本描述生成歌曲", url: "https://music.tiangong.cn", tags: ["免费"] },
+      { name: "海绵音乐", company: "字节跳动", icon: "fa-solid fa-headphones", category: "AI音乐", desc: "字节跳动AI音乐创作，风格多样", url: "https://www.haimian.com", tags: ["免费"] },
+
+      // ===== AI设计 =====
+      { name: "即时AI", company: "即时设计", icon: "fa-solid fa-vector-square", category: "AI设计", desc: "AI生成UI设计稿，文本描述直接出界面", url: "https://js.design/ai", tags: ["免费/付费"] },
+      { name: "美图AI", company: "美图", icon: "fa-solid fa-camera-retro", category: "AI设计", desc: "美图AI修图、AI绘画、AI写真一站式平台", url: "https://www.meitu.com/ai", tags: ["热门", "免费/付费"] },
+      { name: "标小智", company: "标小智", icon: "fa-solid fa-trademark", category: "AI设计", desc: "AI生成Logo设计，输入名称自动生成品牌标识", url: "https://www.logosc.cn", tags: ["免费/付费"] }
     ];
 
     const categories = [...new Set(toolsData.map(t => t.category))];
     let currentCategory = "全部";
     let searchTerm = "";
+
+    function updateStats() {
+      document.getElementById("toolCount").textContent = toolsData.length;
+      document.getElementById("catCount").textContent = categories.length;
+    }
 
     function renderCategories() {
       const container = document.getElementById("categoryContainer");
@@ -230,9 +309,11 @@
         if (currentCategory !== "全部" && tool.category !== currentCategory) return false;
         if (searchTerm) {
           const term = searchTerm.toLowerCase();
-          if (!tool.name.toLowerCase().includes(term) && 
-              !tool.desc.toLowerCase().includes(term) && 
-              !tool.company.toLowerCase().includes(term)) return false;
+          const matchName = tool.name.toLowerCase().includes(term);
+          const matchDesc = tool.desc.toLowerCase().includes(term);
+          const matchCompany = tool.company.toLowerCase().includes(term);
+          const matchTags = tool.tags.some(tag => tag.toLowerCase().includes(term));
+          if (!matchName && !matchDesc && !matchCompany && !matchTags) return false;
         }
         return true;
       });
@@ -243,22 +324,30 @@
         return;
       }
 
-      container.innerHTML = filtered.map(tool => `
-        <div class="tool-card">
-          <div class="card-header">
-            <div class="tool-icon"><i class="${tool.icon}"></i></div>
-            <div>
-              <div class="tool-name">${tool.name}</div>
-              <div class="tool-company">${tool.company}</div>
+      container.innerHTML = filtered.map(tool => {
+        const tagsHtml = tool.tags.map(t => {
+          const isNew = t === "新上线" || t === "热门";
+          return `<span class="tag${isNew ? ' new' : ''}">${t}</span>`;
+        }).join("");
+        
+        return `
+          <div class="tool-card">
+            <div class="card-header">
+              <div class="tool-icon"><i class="${tool.icon}"></i></div>
+              <div>
+                <div class="tool-name">${tool.name}</div>
+                <div class="tool-company">${tool.company}</div>
+              </div>
+            </div>
+            <div class="tool-desc">${tool.desc}</div>
+            <div class="tool-tags">${tagsHtml}</div>
+            <div class="tool-meta">
+              <span class="category-tag">${tool.category}</span>
+              <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="visit-btn">访问 →</a>
             </div>
           </div>
-          <div class="tool-desc">${tool.desc}</div>
-          <div class="tool-meta">
-            <span class="category-tag">${tool.category}</span>
-            <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="visit-btn">访问 →</a>
-          </div>
-        </div>
-      `).join("");
+        `;
+      }).join("");
     }
 
     document.getElementById("searchInput").addEventListener("input", function(e) {
@@ -267,9 +356,9 @@
     });
 
     // 初始渲染
+    updateStats();
     renderCategories();
     renderTools();
   </script>
 </body>
 </html>
-<title>index</title>
